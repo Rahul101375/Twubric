@@ -1,0 +1,90 @@
+<div class="example-container mat-elevation-z8 mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-3">
+      <mat-form-field class="w-100">
+        <input matInput (keyup)="applyFilter($event)" placeholder="search..." >
+      </mat-form-field>
+    </div>
+  </div>
+  <mat-table [dataSource]="dataSource" matSort >
+    <!-- Index Column -->
+    <ng-container matColumnDef="index">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> S.No </mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index;"> {{i+1}} </mat-cell>
+    </ng-container>
+
+<!-- UserName Column -->
+    <ng-container matColumnDef="userName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> User </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <div class="user-container">
+          <img [src]="row.image" alt="User Image" class="user-image">
+          <div class="user-details">
+            <span >{{ row.username }}</span>
+          </div>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Friends Column -->
+    <ng-container matColumnDef="friends">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Friends </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row?.twubric?.friends ? row?.twubric?.friends : '---'}} </mat-cell>
+    </ng-container>
+
+    <!-- Influence Column -->
+    <ng-container matColumnDef="influence">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Influence </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row?.twubric?.influence ? row?.twubric?.influence : '---'}} </mat-cell>
+    </ng-container>
+
+   <!-- Chirpiness Column -->
+    <ng-container matColumnDef="chirpiness">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Chirpiness </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row?.twubric?.chirpiness ? row?.twubric?.chirpiness : '---'}} </mat-cell>
+    </ng-container>
+
+    <!-- Twubric Score Column -->
+    <ng-container matColumnDef="twubricScore">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Twubric Score </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row?.twubric?.total ? row?.twubric?.total :'---'}} </mat-cell>
+    </ng-container>
+
+    <!-- Join date Column -->
+    <ng-container matColumnDef="date">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Join date </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row?.join_date ? (row?.join_date | date) : '---'}} </mat-cell>
+    </ng-container>
+    <!-- Join date Column -->
+    <ng-container matColumnDef="endDate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> End date </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row?.end_date ? (row?.end_date | date) : '---'}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Action </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+
+        <!-- Edit icon -->
+        <button mat-icon-button (click)="editItem(row)" class="editBtn">
+          <mat-icon aria-label="Edit" class="cursor">edit</mat-icon>
+        </button>
+
+        <!-- Remove icon -->
+        <button mat-icon-button (click)="removeItem(row)" class="deleteBtn">
+          <mat-icon aria-label="Remove" class="cursor">delete</mat-icon>
+        </button>
+
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;">
+    </mat-row>
+  </mat-table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
+
+
+
